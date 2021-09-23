@@ -63,8 +63,8 @@ def listMD(md, show_uuids):
             print('%s%03i: %02i:%02i:%02i+%03i %s %s %s %s %s' % (prefix,
                 track, hour, minute, second, sample, codec_name_dict[codec],
                 channel_count_dict[channel_count], flag_dict[flags],
-                md_iface.getTrackTitle(real_track),
-                md_iface.getTrackTitle(real_track, True)))
+                md_iface.getTrackTitle(real_track).decode('shift_jis_2004'),
+                md_iface.getTrackTitle(real_track, True).decode('shift_jis_2004')))
             if show_uuids:
                 uuid = md_iface.getTrackUUID(real_track)
                 print('%s UUID:' % prefix, ''.join(["%02x"%ord(i) for i in uuid]))

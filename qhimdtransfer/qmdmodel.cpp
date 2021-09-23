@@ -26,11 +26,11 @@ QVariant QNetMDTracksModel::headerData(int section, Qt::Orientation orientation,
         switch((ncolumnum)section)
         {
             case CoId:
-                return QSize(met.width("9999")+5, 0);
+                return QSize(met.horizontalAdvance("9999")+5, 0);
             case CoGroup:
             case CoTitle:
             case CoLength:
-                return QSize(met.width("9:99:99"), 0);
+                return QSize(met.horizontalAdvance("9:99:99"), 0);
             case CoCodec:
             case CoUploadable:
                 /* Really use the header for the metric in these columns,
@@ -129,8 +129,10 @@ QString QNetMDTracksModel::open(QMDDevice * device)
         ret = ndev->open();
     }
 
-    if(!ret.isEmpty())
+    if(!ret.isEmpty()) {
         close();
+        return ret;
+    }
 
     /* fetch track info for all tracks first, getting track info inside data() function is very slow */
     for(; i < ndev->trackCount(); i++)
@@ -173,20 +175,20 @@ QVariant QHiMDTracksModel::headerData(int section, Qt::Orientation orientation, 
         switch((hcolumnum)section)
         {
             case ColId:
-                return QSize(met.width("9999")+5, 0);
+                return QSize(met.horizontalAdvance("9999")+5, 0);
             case ColTitle:
             case ColArtist:
             case ColAlbum:
                 return QSize(25*met.averageCharWidth(), 0);
             case ColLength:
-                return QSize(met.width("9:99:99"), 0);
+                return QSize(met.horizontalAdvance("9:99:99"), 0);
             case ColCodec:
             case ColUploadable:
                 /* Really use the header for the metric in these columns,
                    contents will be shorter */
                 return QAbstractListModel::headerData(section,orientation,role);
             case ColRecDate:
-                return QSize(met.width("yyyy.MM.dd hh:mm:ss"), 0);
+                return QSize(met.horizontalAdvance("yyyy.MM.dd hh:mm:ss"), 0);
         }
     }
 
